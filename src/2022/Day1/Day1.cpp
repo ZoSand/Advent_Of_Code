@@ -50,47 +50,24 @@ namespace AOC::Y2022
 
         //close file
         elvesInventories.close();
+
+        //sort vector
+        std::sort(m_elvesInventory.begin(), m_elvesInventory.end());
     }
 
     std::string Day1::SolvePart1()
     {
-        //get highest value in vector
-        int highestValue = 0;
-        for (int elvesInventory : m_elvesInventory)
-        {
-            if (elvesInventory > highestValue)
-            {
-                highestValue = elvesInventory;
-            }
-        }
+        //get highest value in sorted  vector
+        int highestValue = m_elvesInventory.back();
         return std::to_string(highestValue);
     }
 
     std::string Day1::SolvePart2()
     {
-        //find top 3 values in vector
-        int highestValue = 0;
-        int secondHighestValue = 0;
-        int thirdHighestValue = 0;
-
-        for (std::size_t elvesInventory : m_elvesInventory)
-        {
-            if (elvesInventory > highestValue)
-            {
-                thirdHighestValue = secondHighestValue;
-                secondHighestValue = highestValue;
-                highestValue = elvesInventory;
-            }
-            else if (elvesInventory > secondHighestValue)
-            {
-                thirdHighestValue = secondHighestValue;
-                secondHighestValue = elvesInventory;
-            }
-            else if (elvesInventory > thirdHighestValue)
-            {
-                thirdHighestValue = elvesInventory;
-            }
-        }
+        //find top 3 values in sorted vector
+        int highestValue = m_elvesInventory.back();
+        int secondHighestValue = m_elvesInventory[m_elvesInventory.size() - 2];
+        int thirdHighestValue = m_elvesInventory[m_elvesInventory.size() - 3];
 
         return std::to_string(highestValue + secondHighestValue + thirdHighestValue);
     }
