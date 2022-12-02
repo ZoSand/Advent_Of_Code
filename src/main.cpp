@@ -5,6 +5,7 @@ int main()
 {
     AOC::Shared::SolutionSolver solver;
     solver.AddSolution(new AOC::Y2022::Day1("./2022/Day1/input.txt"));
+    solver.AddSolution(new AOC::Y2022::Day2("./2022/Day2/input.txt"));
     solver.SolveAll();
     return 0;
 }
