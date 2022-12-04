@@ -15,7 +15,7 @@ namespace AOC::Y2022 {
         std::string m_priority{"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"};
 
     public:
-        explicit Day3(std::string inputFilePath);
+        explicit Day3(std::string inputPath);
 
         std::string SolvePart1() override;
 
