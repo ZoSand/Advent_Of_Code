@@ -22,6 +22,7 @@ namespace AOC::Shared
 
     public:
         explicit SolutionSolver(const std::string &year);
+        ~SolutionSolver();
 
         [[maybe_unused]] void AddSolution(Solution *solution);
 

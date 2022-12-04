@@ -28,4 +28,11 @@ namespace AOC::Shared
     {
         m_solutions.emplace_back(solution);
     }
+
+    SolutionSolver::~SolutionSolver() {
+        for (auto solution: m_solutions)
+        {
+            delete solution;
+        }
+    }
 } // AOC::Shared
