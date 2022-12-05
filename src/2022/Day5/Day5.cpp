@@ -88,6 +88,9 @@ namespace AOC::Y2022
     {
         std::string result;
 
+        //copy crates in new vector
+        std::vector<std::vector<char>> cratesCopy = m_crates;
+
         //foreach instruction
         for (auto &instruction: m_instructions)
         {
@@ -95,20 +98,16 @@ namespace AOC::Y2022
             int fromColumn = std::get<1>(instruction) - 1;
             int toColumn = std::get<2>(instruction) - 1;
 
-            //print instructions
-            std::cout << "Move " << cratesToMove << " crates from column " << fromColumn << " to column " << toColumn
-                              << std::endl;
-
             //move cratesToMove crates from fromColumn to toColumn
             for (int i = 0; i < cratesToMove; i++)
             {
-                m_crates.at(toColumn).push_back(m_crates.at(fromColumn).back());
-                m_crates.at(fromColumn).pop_back();
+                cratesCopy.at(toColumn).push_back(cratesCopy.at(fromColumn).back());
+                cratesCopy.at(fromColumn).pop_back();
             }
         }
 
         //get last crate in each column
-        for (auto &column: m_crates)
+        for (auto &column: cratesCopy)
         {
             //if empty, continue
             if (column.empty())
@@ -117,11 +116,40 @@ namespace AOC::Y2022
             }
             result += column.back();
         }
+
         return result;
     }
 
     std::string Day5::SolvePart2()
     {
-        return "std::string()";
+        //same as part 1 but moving multiple crates at once
+        std::string result;
+
+        std::vector<std::vector<char>> cratesCopy = m_crates;
+
+        for (auto &instruction: m_instructions)
+        {
+            int cratesToMove = std::get<0>(instruction);
+            int fromColumn = std::get<1>(instruction) - 1;
+            int toColumn = std::get<2>(instruction) - 1;
+
+            //move cratesToMove crates from fromColumn to toColumn in 1 move
+            for (int i = 0; i < cratesToMove; i++)
+            {
+                cratesCopy.at(toColumn).push_back(cratesCopy.at(fromColumn).at(cratesCopy.at(fromColumn).size() - cratesToMove + i));
+                cratesCopy.at(fromColumn).erase(cratesCopy.at(fromColumn).begin() + cratesCopy.at(fromColumn).size() - cratesToMove + i);
+            }
+        }
+
+        for (auto &column: cratesCopy)
+        {
+            if (column.empty())
+            {
+                continue;
+            }
+            result += column.back();
+        }
+
+        return result;
     }
 } // AOC::Y2022
