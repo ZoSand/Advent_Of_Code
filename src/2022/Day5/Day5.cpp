@@ -23,6 +23,8 @@ namespace AOC::Y2022
             lines.push_back(line);
         }
 
+        file.close();
+
         m_crates.resize(9);
 
         for (;;)
@@ -32,19 +34,6 @@ namespace AOC::Y2022
                 lines.erase(lines.begin(), lines.begin() + 2);
                 break;
             }
-
-            //TODO: parse crates
-
-            //crate descriptive is [X] and crate position is the position of X in the line divided by 4
-            //example:
-            //    [C]         [Q]         [V]
-            //    [D]         [D] [S]     [M] [Z]
-            //    [G]     [P] [W] [M]     [C] [G]
-            //    [F]     [Z] [C] [D] [P] [S] [W]
-            //[P] [L]     [C] [V] [W] [W] [H] [L]
-            //[G] [B] [V] [R] [L] [N] [G] [P] [F]
-            //[R] [T] [S] [S] [S] [T] [D] [L] [P]
-            //[N] [J] [M] [L] [P] [C] [H] [Z] [R]
 
             std::size_t cratePosition = 0;
 
@@ -80,8 +69,6 @@ namespace AOC::Y2022
         {
             std::reverse(cratePile.begin(), cratePile.end());
         }
-
-        file.close();
     }
 
     std::string Day5::SolvePart1()
