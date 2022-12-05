@@ -9,5 +9,6 @@
 #include "Day2/Day2.h"
 #include "Day3/Day3.h"
 #include "Day4/Day4.h"
+#include "Day5/Day5.h"
 
 #endif //ADVENTOFCODE_GLOBAL_2022_H

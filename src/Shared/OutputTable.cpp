@@ -23,8 +23,8 @@ namespace AOC::Shared
 
     void OutputTable::AddRow(std::string solution1, std::string solution2)
     {
-        m_columnWidths[1] = std::max(m_columnWidths[1], static_cast<int>(solution1.length()));
-        m_columnWidths[2] = std::max(m_columnWidths[2], static_cast<int>(solution2.length()));
+        m_columnWidths[1] = std::max(m_columnWidths[1], static_cast<int>(solution1.length() + 2));
+        m_columnWidths[2] = std::max(m_columnWidths[2], static_cast<int>(solution2.length() + 2));
         m_rows.emplace_back(std::move(solution1), std::move(solution2));
     }
 

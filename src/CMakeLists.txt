@@ -16,6 +16,6 @@ add_executable(Advent_Of_Code
         2022/Day4/Day4.cpp 2022/Day4/Day4.h
 
 
-        main.cpp)
+        main.cpp 2022/Day5/Day5.cpp 2022/Day5/Day5.h)
 
 install(TARGETS Advent_Of_Code DESTINATION bin)
