@@ -36,15 +36,23 @@ namespace AOC::Y2022
 
 		std::vector<std::string> m_input;
 
-		void calculateSize(directory& directory1);
+		void calculateSize(directory &pwd);
 
-		std::size_t SumUpSizes(directory& directory1);
+		std::size_t SumUpSizes(const directory& pwd);
+
 	public:
 		explicit Day7(std::string inputPath);
 
 		std::string SolvePart1() override;
 
 		std::string SolvePart2() override;
+
+		void GetDirectoryToDelete(
+				directory& pwd,
+				std::size_t diskSize,
+				std::size_t neededSize,
+				std::size_t& currentSmallestSize
+		                           );
 	};
 
 } // AOC::Y2022

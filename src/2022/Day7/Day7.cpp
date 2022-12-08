@@ -3,28 +3,29 @@
 //
 
 #include <fstream>
+#include <limits>
 #include "Day7.h"
 
 namespace AOC::Y2022
 {
-	void Day7::calculateSize(Day7::directory& directory)
+	void Day7::calculateSize(Day7::directory &pwd)
 	{
-		for (auto &dir : directory.subDirectories)
+		for (auto &dir: pwd.subDirectories)
 		{
 			calculateSize(dir.second);
-			directory.size += dir.second.size;
+			pwd.size += dir.second.size;
 		}
-		for (auto &file : directory.files)
+		for (auto &file: pwd.files)
 		{
-			directory.size += file.second.size;
+			pwd.size += file.second.size;
 		}
 	}
 
-	std::size_t Day7::SumUpSizes(Day7::directory &directory1)
+	std::size_t Day7::SumUpSizes(const Day7::directory &pwd)
 	{
-		//foreach subdirectory in directory1 sum up the sizes if the size is less than 100000
+		//foreach subdirectory in dir sum up the sizes if the size is less than 100000
 		std::size_t sum = 0;
-		for (auto &dir : directory1.subDirectories)
+		for (auto &dir: pwd.subDirectories)
 		{
 			if (dir.second.size < 100000)
 			{
@@ -33,6 +34,27 @@ namespace AOC::Y2022
 			sum += SumUpSizes(dir.second);
 		}
 		return sum;
+	}
+
+	void Day7::GetDirectoryToDelete(
+			directory &pwd,
+			size_t diskSize,
+			size_t neededSize,
+			size_t &currentSmallestSize
+	                               )
+	{
+		std::size_t unusedSize = diskSize - root.size;
+		std::size_t realNeededSize = neededSize - unusedSize;
+		for (auto &dir: pwd.subDirectories)
+		{
+			if (dir.second.size < currentSmallestSize
+			&& dir.second.size > realNeededSize)
+			{
+				currentSmallestSize = dir.second.size;
+			}
+			GetDirectoryToDelete(dir.second, diskSize, neededSize, currentSmallestSize);
+		}
+
 	}
 
 	Day7::Day7(std::string inputPath)
@@ -47,8 +69,10 @@ namespace AOC::Y2022
 		}
 
 		root.name = "/";
-		root.files = { };
+		root.parent = nullptr;
+		root.size = 0;
 		root.subDirectories = { };
+		root.files = { };
 
 		currentDirectory = &root;
 
@@ -89,7 +113,6 @@ namespace AOC::Y2022
 				}
 				else if (cmd == "ls")
 				{
-					std::cout << "Listing directory " << currentDirectory->name << std::endl;
 					while (i + 1 < m_input.size() && !m_input[i + 1].starts_with('$'))
 					{
 						if (m_input[i + 1].starts_with("dir"))
@@ -109,7 +132,6 @@ namespace AOC::Y2022
 						{
 							std::string arg = m_input[i + 1].substr(m_input[i + 1].find_last_of(' ') + 1);
 							std::string fileSize = m_input[i + 1].substr(0, m_input[i + 1].find(' '));
-							std::cout << "File: " << arg << " Size: " << fileSize << std::endl;
 
 							if (currentDirectory->files.find(arg) == currentDirectory->files.end())
 							{
@@ -123,12 +145,7 @@ namespace AOC::Y2022
 				}
 			}
 		}
-
-		//calculate size of each directory
-		for (auto &dir : root.subDirectories)
-		{
-			calculateSize(dir.second);
-		}
+		calculateSize(root);
 
 		input.close();
 	}
@@ -142,7 +159,20 @@ namespace AOC::Y2022
 
 	std::string Day7::SolvePart2()
 	{
-		return "std::string()";
+		//disk space is 70000000
+		std::size_t diskSpace = 70000000;
+		//we need to have a free space of 30000000
+		std::size_t neededSpace = 30000000;
+
+		//find the smallest directory we can delete to reach the needed space
+		std::size_t smallestSize = 70000000;
+
+		std::cout << root.size << std::endl;
+		std::cout << diskSpace << std::endl;
+
+		GetDirectoryToDelete(root, diskSpace, neededSpace, smallestSize);
+
+		return std::to_string(smallestSize);
 	}
 
 } // AOC::Y2022
