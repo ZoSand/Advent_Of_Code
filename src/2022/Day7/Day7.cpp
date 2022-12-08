@@ -167,9 +167,6 @@ namespace AOC::Y2022
 		//find the smallest directory we can delete to reach the needed space
 		std::size_t smallestSize = 70000000;
 
-		std::cout << root.size << std::endl;
-		std::cout << diskSpace << std::endl;
-
 		GetDirectoryToDelete(root, diskSpace, neededSpace, smallestSize);
 
 		return std::to_string(smallestSize);
