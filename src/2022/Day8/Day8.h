@@ -17,13 +17,6 @@ namespace AOC::Y2022
 	private:
 		std::vector<std::vector<int>> m_input;
 
-	public:
-		explicit Day8(std::string inputPath);
-
-		std::string SolvePart1() override;
-
-		std::string SolvePart2() override;
-
 		bool IsVisible(
 				int i,
 				int j
@@ -33,6 +26,13 @@ namespace AOC::Y2022
 				int x,
 				int y
 		                          );
+
+	public:
+		explicit Day8(std::string inputPath);
+
+		std::string SolvePart1() override;
+
+		std::string SolvePart2() override;
 	};
 
 } // AOC::Y2022
