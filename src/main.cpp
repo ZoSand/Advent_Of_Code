@@ -13,6 +13,7 @@ int main()
     solver2022.AddSolution(new AOC::Y2022::Day5("./2022/Day5/input.txt"));
     solver2022.AddSolution(new AOC::Y2022::Day6("./2022/Day6/input.txt"));
 	solver2022.AddSolution(new AOC::Y2022::Day7("./2022/Day7/input.txt"));
+	solver2022.AddSolution(new AOC::Y2022::Day8("./2022/Day8/input.txt"));
     solver2022.SolveAll();
 
     return 0;
