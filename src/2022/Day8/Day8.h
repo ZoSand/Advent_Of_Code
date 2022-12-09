@@ -25,9 +25,14 @@ namespace AOC::Y2022
 		std::string SolvePart2() override;
 
 		bool IsVisible(
-				size_t i,
-				size_t j
+				int i,
+				int j
 		              );
+
+		std::size_t GetScenicScore(
+				int x,
+				int y
+		                          );
 	};
 
 } // AOC::Y2022

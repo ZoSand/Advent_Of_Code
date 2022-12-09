@@ -10,11 +10,11 @@
 namespace AOC::Y2022
 {
 	bool Day8::IsVisible(
-			std::size_t x,
-			std::size_t y
+			int x,
+			int y
 	                    )
 	{
-		std::vector<std::tuple<std::size_t, std::size_t>> directions
+		std::vector<std::tuple<int, int>> directions
 				{
 						{ 0,  1 },
 						{ 1,  0 },
@@ -24,8 +24,8 @@ namespace AOC::Y2022
 
 		for (const auto &[dx, dy]: directions)
 		{
-			std::size_t currentX = x;
-			std::size_t currentY = y;
+			int currentX = x;
+			int currentY = y;
 			int treeHeight = m_input[x][y];
 
 			while (true)
@@ -46,6 +46,53 @@ namespace AOC::Y2022
 			}
 		}
 		return false;
+	}
+
+	std::size_t Day8::GetScenicScore(
+			int x,
+			int y
+	                                )
+	{
+		std::vector<std::tuple<int, int>> directions
+				{
+						{ 0,  1 },
+						{ 1,  0 },
+						{ 0,  -1 },
+						{ -1, 0 }
+				};
+
+		std::size_t score = 1;
+		for (auto &[dx, dy]: directions)
+		{
+			int currentX = x;
+			int currentY = y;
+			int treeHeight = m_input[x][y];
+			std::size_t viewingDistance = 0;
+
+			while (true)
+			{
+				currentX += dx;
+				currentY += dy;
+
+				if (currentX >= m_input.size() || currentY >= m_input[0].size()
+						|| currentX < 0 || currentY < 0)
+				{
+					break;
+				}
+
+				viewingDistance++;
+
+				if (m_input[currentX][currentY] >= treeHeight)
+				{
+					break;
+				}
+			}
+			if (viewingDistance > 0)
+			{
+				score *= viewingDistance;
+			}
+		}
+		return score;
 	}
 
 	Day8::Day8(std::string inputPath)
@@ -73,10 +120,10 @@ namespace AOC::Y2022
 	{
 		std::size_t visibleCount = 0;
 		//foreach input
-		for (std::size_t i = 0; i < m_input.size(); i++)
+		for (int i = 0; i < m_input.size(); i++)
 		{
 			//foreach number in input
-			for (std::size_t j = 0; j < m_input[i].size(); j++)
+			for (int j = 0; j < m_input[i].size(); j++)
 			{
 
 				IsVisible(i, j) ? visibleCount++ : visibleCount;
@@ -88,6 +135,21 @@ namespace AOC::Y2022
 
 	std::string Day8::SolvePart2()
 	{
-		return "Not implemented yet";
+		std::size_t bestScore = 0;
+
+		for (int i = 0; i < m_input.size(); i++)
+		{
+			for (int j = 0; j < m_input[i].size(); j++)
+			{
+				std::size_t treeScore = GetScenicScore(i, j);
+				std::cout << treeScore << std::endl;
+				if (treeScore > bestScore)
+				{
+					bestScore = treeScore;
+				}
+			}
+		}
+
+		return std::to_string(bestScore);
 	}
 } // AOC::Y2022
